@@ -1,0 +1,35 @@
+html, body {
+    height: 100%;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main {
+    padding-bottom: 50px; /* Same height as footer */
+}
+.navbar img {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
+    object-fit: contain;
+}
+h1, h2 {
+    color: #00ffcc;
+}
+.navbar-brand, .nav-link {
+    color: #00ffcc !important;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #555; 
+    color: white; 
+    text-align: center;
+    padding: 8px;
+    z-index: 500; 
+}
