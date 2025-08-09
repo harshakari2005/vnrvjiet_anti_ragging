@@ -10,6 +10,10 @@ const ComplaintSchema = new mongoose.Schema({
   bullyingType: String,
   knowPerson: Boolean,
   privacy: String,
+  accusedName: String,
+  accusedRollNumber: String,
+  accusedYear: String,
+  accusedDepartment: String,
   date: {
     type: Date,
     default: Date.now

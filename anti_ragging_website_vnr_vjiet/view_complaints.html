@@ -10,6 +10,7 @@
 <body class="bg-dark text-white">
     <nav class="navbar navbar-expand-lg navbar-dark bg-black shadow">
         <div class="container-fluid">
+            <img src="/anti_ragging_website_vnr_vjiet/assets/img/VNRLOGO.png" alt="">
             <a class="navbar-brand" href="index.html">Anti-Ragging Committee</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -40,10 +41,16 @@
                     <th>Know Person</th>
                     <th>Privacy</th>
                     <th>Issue</th>
+                    <th>Accused Name</th>
+                    <th>Accused Roll Number</th>
+                    <th>Accused Year</th>
+                    <th>Accused Department</th>
+                    <th>Image/Video</th>
                 </tr>
             </thead>
             <tbody id="complaint-table-body">
-                </tbody>
+                <!-- Complaints will be inserted here by JavaScript -->
+            </tbody>
         </table>
     </main>
     <footer class="text-center p-3 mt-5 bg-secondary">
@@ -62,7 +69,7 @@
                 renderComplaints(complaints);
             } catch (error) {
                 console.error('Error fetching complaints:', error);
-                document.getElementById('complaint-table-body').innerHTML = '<tr><td colspan="10">Error loading complaints. Please check the server.</td></tr>';
+                document.getElementById('complaint-table-body').innerHTML = '<tr><td colspan="15">Error loading complaints. Please check the server.</td></tr>';
             }
         }
 
@@ -71,12 +78,14 @@
             tableBody.innerHTML = ''; // Clear existing data
 
             if (complaints.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="10">No complaints submitted yet.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="15">No complaints submitted yet.</td></tr>';
                 return;
             }
 
             complaints.forEach(complaint => {
                 const row = document.createElement('tr');
+                const imageLink = complaint.image ? `<a href="http://localhost:5000/${complaint.image}" target="_blank">View</a>` : 'N/A';
+
                 row.innerHTML = `
                     <td>${new Date(complaint.date).toLocaleDateString()}</td>
                     <td>${complaint.name || 'N/A'}</td>
@@ -88,6 +97,11 @@
                     <td>${complaint.knowPerson ? 'Yes' : 'No'}</td>
                     <td>${complaint.privacy || 'N/A'}</td>
                     <td>${complaint.message || 'N/A'}</td>
+                    <td>${complaint.accusedName || 'N/A'}</td>
+                    <td>${complaint.accusedRollNumber || 'N/A'}</td>
+                    <td>${complaint.accusedYear || 'N/A'}</td>
+                    <td>${complaint.accusedDepartment || 'N/A'}</td>
+                    <td>${imageLink}</td>
                 `;
                 tableBody.appendChild(row);
             });

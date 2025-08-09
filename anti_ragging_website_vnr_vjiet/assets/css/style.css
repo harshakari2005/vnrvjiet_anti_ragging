@@ -1,35 +1,72 @@
 html, body {
     height: 100%;
 }
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #343a40;
+    color: white;
 }
+
 main {
-    padding-bottom: 50px; /* Same height as footer */
+    flex: 1;
 }
+
 .navbar img {
     height: 40px;
     width: auto;
     margin-right: 10px;
     object-fit: contain;
 }
+
 h1, h2 {
     color: #00ffcc;
 }
+
 .navbar-brand, .nav-link {
     color: #00ffcc !important;
 }
+
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #555; 
-    color: white; 
+    background-color: #555;
+    color: white;
     text-align: center;
-    padding: 8px;
-    z-index: 500; 
+    padding: 10px;
+    width: 100%;
+    margin-top: auto;
+}
+
+/* New CSS for the moving text */
+.scrolling-text-container {
+    overflow: hidden;
+    background-color: #f0ad4e; /* Yellowish background */
+    color: #343a40;
+    padding: 10px 0;
+}
+
+.scrolling-text {
+    display: flex;
+    animation: scroll-left 15s linear infinite;
+    font-weight: bold;
+    font-size: 1.5rem;
+    transform: skewX(-15deg);
+}
+
+.scroll-item {
+    white-space: nowrap;
+    padding-right: 20px;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }

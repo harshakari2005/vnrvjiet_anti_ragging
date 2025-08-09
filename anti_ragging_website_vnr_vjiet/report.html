@@ -10,7 +10,8 @@
 <body class="bg-dark text-white">
     <nav class="navbar navbar-expand-lg navbar-dark bg-black shadow">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Anti-Ragging Committee</a>
+            <img src="/anti_ragging_website_vnr_vjiet/assets/img/VNRLOGO.png" alt="">
+            <a class="navbar-brand" href="#">Anti-Ragging Committee</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,7 +29,12 @@
     <main class="container my-5">
         <h2>Report Ragging</h2>
         <p>If you witness or are a victim of ragging, please report it confidentially.</p>
-        <form id="ragging-report-form">
+        <form id="ragging-report-form" enctype="multipart/form-data">
+            <!-- Hidden inputs to store location and bullying type -->
+            <input type="hidden" id="location" name="location">
+            <input type="hidden" id="bullyingType" name="bullyingType">
+
+            <!-- Step 1: Select Location -->
             <div id="step-1">
                 <h4>Step 1: Select the location where the incident occurred.</h4>
                 <div class="list-group">
@@ -42,6 +48,7 @@
                 </div>
             </div>
 
+            <!-- Step 2: Select Bullying Type -->
             <div id="step-2" style="display: none;">
                 <h4>Step 2: What kind of bullying did you undergo?</h4>
                 <div class="list-group">
@@ -52,41 +59,81 @@
                 <button type="button" id="back-to-step-1" class="btn btn-secondary mt-3">Go Back</button>
             </div>
 
+            <!-- Step 3: User Details -->
             <div id="step-3" style="display: none;">
                 <h4>Step 3: Please enter your details.</h4>
                 <div class="mb-3">
                     <label for="name" class="form-label">Name*</label>
-                    <input type="text" class="form-control" id="name" required>
+                    <input type="text" class="form-control" name="name" id="name" required>
                 </div>
                 <div class="mb-3">
                     <label for="rollnumber" class="form-label">Roll Number*</label>
-                    <input type="text" class="form-control" id="rollnumber" required>
+                    <input type="text" class="form-control" name="rollNumber" id="rollnumber" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address*</label>
-                    <input type="email" class="form-control" id="email" required>
+                    <input type="email" class="form-control" name="email" id="email" required>
                 </div>
                 <div class="mb-3">
                     <label for="mobile" class="form-label">Mobile Number*</label>
-                    <input type="tel" class="form-control" id="mobile" required>
+                    <input type="tel" class="form-control" name="mobile" id="mobile" required>
                 </div>
                 <div class="mb-3">
                     <label for="issue" class="form-label">What was your issue?*</label>
-                    <textarea class="form-control" id="issue" rows="3" required></textarea>
+                    <textarea class="form-control" name="message" id="issue" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload a picture or video (optional)</label>
+                    <input type="file" class="form-control" name="image" id="image" accept="image/*,video/*">
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="knowPerson">
                     <label class="form-check-label" for="knowPerson">Do you know the person who ragged you?</label>
                 </div>
-                <div class="mb-3">
-                    <label for="privacy" class="form-label">How should your details be handled?*</label>
-                    <select class="form-select" id="privacy" required>
-                        <option value="private">Private (Only committee members can view)</option>
-                        <option value="anonymous">Anonymous (Details are kept confidential and not shared with the committee)</option>
-                    </select>
+                <div id="privacy-section-step3">
+                    <div class="mb-3">
+                        <label for="privacy" class="form-label">How should your details be handled?*</label>
+                        <select class="form-select" name="privacy" id="privacy" required>
+                            <option value="private">Private (Only committee members can view)</option>
+                            <option value="anonymous">Anonymous (Details are kept confidential and not shared with the committee)</option>
+                        </select>
+                    </div>
                 </div>
                 <button type="button" id="back-to-step-2" class="btn btn-secondary mt-3">Go Back</button>
-                <button type="submit" class="btn btn-warning mt-3">Submit Report</button>
+                <button type="button" id="next-to-step-4" class="btn btn-warning mt-3" style="display:none;">Next</button>
+                <button type="submit" id="submit-btn-step3" class="btn btn-warning mt-3">Submit Report</button>
+            </div>
+
+            <!-- Step 4: Accused Person's Details -->
+            <div id="step-4" style="display: none;">
+                <h4>Step 4: Please enter the details of the person who ragged you.</h4>
+                <div class="mb-3">
+                    <label for="accusedName" class="form-label">Name of Accused</label>
+                    <input type="text" class="form-control" name="accusedName" id="accusedName">
+                </div>
+                <div class="mb-3">
+                    <label for="accusedRollNumber" class="form-label">Roll Number of Accused</label>
+                    <input type="text" class="form-control" name="accusedRollNumber" id="accusedRollNumber">
+                </div>
+                <div class="mb-3">
+                    <label for="accusedYear" class="form-label">Year of Accused</label>
+                    <input type="text" class="form-control" name="accusedYear" id="accusedYear">
+                </div>
+                <div class="mb-3">
+                    <label for="accusedDepartment" class="form-label">Department of Accused</label>
+                    <input type="text" class="form-control" name="accusedDepartment" id="accusedDepartment">
+                </div>
+                <div id="privacy-section-step4">
+                    <div class="mb-3">
+                        <label for="privacy-step4" class="form-label">How should your details be handled?*</label>
+                        <select class="form-select" name="privacy-step4" id="privacy-step4" required>
+                            <option value="private">Private (Only committee members can view)</option>
+                            <option value="anonymous">Anonymous (Details are kept confidential and not shared with the committee)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" id="back-to-step-3-from-4" class="btn btn-secondary mt-3">Go Back</button>
+                <button type="submit" id="submit-btn-step4" class="btn btn-warning mt-3">Submit Report</button>
             </div>
         </form>
     </main>
@@ -98,73 +145,119 @@
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
         const step3 = document.getElementById('step-3');
+        const step4 = document.getElementById('step-4');
+
         const backToStep1Btn = document.getElementById('back-to-step-1');
         const backToStep2Btn = document.getElementById('back-to-step-2');
-        let selectedLocation = '';
-        let selectedBullying = '';
+        const backToStep3From4Btn = document.getElementById('back-to-step-3-from-4');
+
+        const knowPersonCheckbox = document.getElementById('knowPerson');
+        const nextToStep4Btn = document.getElementById('next-to-step-4');
+        const submitBtnStep3 = document.getElementById('submit-btn-step3');
+        const submitBtnStep4 = document.getElementById('submit-btn-step4');
+        
+        const locationInput = document.getElementById('location');
+        const bullyingTypeInput = document.getElementById('bullyingType');
+
+        function handleNavigation(fromStep, toStep) {
+            fromStep.style.display = 'none';
+            toStep.style.display = 'block';
+        }
 
         step1.querySelectorAll('.list-group-item').forEach(button => {
             button.addEventListener('click', () => {
-                selectedLocation = button.dataset.location;
-                step1.style.display = 'none';
-                step2.style.display = 'block';
+                locationInput.value = button.dataset.location;
+                handleNavigation(step1, step2);
             });
         });
 
-        backToStep1Btn.addEventListener('click', () => {
-            step2.style.display = 'none';
-            step1.style.display = 'block';
-        });
+        backToStep1Btn.addEventListener('click', () => handleNavigation(step2, step1));
 
         step2.querySelectorAll('.list-group-item').forEach(button => {
             button.addEventListener('click', () => {
-                selectedBullying = button.dataset.bullying;
-                step2.style.display = 'none';
-                step3.style.display = 'block';
+                bullyingTypeInput.value = button.dataset.bullying;
+                handleNavigation(step2, step3);
             });
         });
 
         backToStep2Btn.addEventListener('click', () => {
-            step3.style.display = 'none';
-            step2.style.display = 'block';
+            handleNavigation(step3, step2);
+        });
+
+        knowPersonCheckbox.addEventListener('change', (event) => {
+            if (event.target.checked) {
+                nextToStep4Btn.style.display = 'block';
+                submitBtnStep3.style.display = 'none';
+            } else {
+                nextToStep4Btn.style.display = 'none';
+                submitBtnStep3.style.display = 'block';
+            }
+        });
+
+        nextToStep4Btn.addEventListener('click', () => {
+             // Check if all required fields in step 3 are valid before navigating
+            const formInputs = step3.querySelectorAll('[required]');
+            let formIsValid = true;
+            formInputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    input.reportValidity();
+                    formIsValid = false;
+                }
+            });
+            if(formIsValid){
+                handleNavigation(step3, step4);
+            }
+        });
+
+        backToStep3From4Btn.addEventListener('click', () => {
+            handleNavigation(step4, step3);
+            knowPersonCheckbox.checked = false; // Uncheck when going back
+            nextToStep4Btn.style.display = 'none';
+            submitBtnStep3.style.display = 'block';
         });
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const complaintData = {
-                name: document.getElementById('name').value,
-                rollNumber: document.getElementById('rollnumber').value,
-                email: document.getElementById('email').value,
-                mobile: document.getElementById('mobile').value,
-                message: document.getElementById('issue').value,
-                location: selectedLocation,
-                bullyingType: selectedBullying,
-                knowPerson: document.getElementById('knowPerson').checked,
-                privacy: document.getElementById('privacy').value
-            };
+            
+            // Use FormData to automatically collect all form data by input names
+            const formData = new FormData(form);
+            
+            // Fix privacy field name for step 4
+            if (knowPersonCheckbox.checked) {
+                formData.set('privacy', formData.get('privacy-step4') || '');
+                formData.delete('privacy-step4');
+            } else {
+                // Ensure accused details are not sent if not known
+                formData.delete('accusedName');
+                formData.delete('accusedRollNumber');
+                formData.delete('accusedYear');
+                formData.delete('accusedDepartment');
+            }
 
             try {
                 const response = await fetch('http://localhost:5000/api/report', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(complaintData)
+                    body: formData
                 });
 
                 if (response.ok) {
                     alert('Complaint submitted successfully!');
                     form.reset();
-                    step3.style.display = 'none';
-                    step1.style.display = 'block';
+                    handleNavigation(step4.style.display === 'block' ? step4 : step3, step1); // Go back to step 1
+                    knowPersonCheckbox.checked = false;
+                    nextToStep4Btn.style.display = 'none';
+                    submitBtnStep3.style.display = 'block';
                 } else {
-                    alert('Error submitting complaint. Please try again.');
+                    const errorData = await response.json();
+                    console.error('Error from server:', errorData);
+                    alert('Error submitting complaint: ' + (errorData.error || 'Please try again.'));
                 }
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Network error:', error);
                 alert('Server error. Please try again later.');
             }
         });
+
     </script>
 </body>
 </html>

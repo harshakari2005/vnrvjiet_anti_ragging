@@ -1,9 +1,9 @@
-
+// This file defines the Express router for handling student-related API endpoints.
 const express = require('express');
 const router = express.Router();
 const Student = require('../models/Student');
 
-// Route to add a new student
+// POST route to add a new student
 router.post('/', async (req, res) => {
   try {
     const { name, rollNumber, email, mobile } = req.body;
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Route to get all students
+// GET route to get all students
 router.get('/', async (req, res) => {
   try {
     const students = await Student.find().sort({ dateJoined: -1 });
@@ -34,4 +34,5 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Export the router module
 module.exports = router;
