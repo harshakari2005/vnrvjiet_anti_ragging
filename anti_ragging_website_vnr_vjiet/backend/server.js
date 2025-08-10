@@ -1,3 +1,4 @@
+const MONGO_URI = "mongodb+srv://hvckari:Harsha@2005@cluster0.nlxaxvf.mongodb.net/antiragging?retryWrites=true&w=majority";
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -13,7 +14,7 @@ app.use('/uploads', express.static('uploads'));
 
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(MONGO_URI);
     console.log('✅ MongoDB connected successfully!');
 
     app.use('/api/report', require('./routes/report'));
