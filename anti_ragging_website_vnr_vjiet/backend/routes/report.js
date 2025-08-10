@@ -34,7 +34,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 
     const complaint = new Complaint(complaintData);
     await complaint.save();
-    console.log('Complaint submitted successfully with image!');
+    console.log('Complaint submitted successfully');
     res.status(200).json({ message: 'Complaint submitted' });
   } catch (error) {
     console.error('Server error on submitting complaint:', error);

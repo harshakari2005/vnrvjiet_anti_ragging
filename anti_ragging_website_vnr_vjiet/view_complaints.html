@@ -39,6 +39,7 @@
                     <th>Location</th>
                     <th>Bullying Type</th>
                     <th>Are You?</th>
+                    <th>Known Person</th>
                     <th>Privacy</th>
                     <th>Issue</th>
                     <th>Accused Name</th>
@@ -69,7 +70,7 @@
                 renderComplaints(complaints);
             } catch (error) {
                 console.error('Error fetching complaints:', error);
-                document.getElementById('complaint-table-body').innerHTML = '<tr><td colspan="14">Error loading complaints. Please check the server.</td></tr>';
+                document.getElementById('complaint-table-body').innerHTML = '<tr><td colspan="15">Error loading complaints. Please check the server.</td></tr>';
             }
         }
 
@@ -78,13 +79,14 @@
             tableBody.innerHTML = ''; // Clear existing data
 
             if (complaints.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="14">No complaints submitted yet.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="15">No complaints submitted yet.</td></tr>';
                 return;
             }
 
             complaints.forEach(complaint => {
                 const row = document.createElement('tr');
-                const imageLink = complaint.image ? `<a href="http://localhost:5000/uploads/${complaint.image}" target="_blank">View</a>` : 'N/A';
+                // The URL is now correct.
+                const imageLink = complaint.image ? `<a href="http://localhost:5000/${complaint.image}" target="_blank">View</a>` : 'N/A';
 
                 row.innerHTML = `
                     <td>${new Date(complaint.date).toLocaleDateString()}</td>
@@ -95,6 +97,7 @@
                     <td>${complaint.location || 'N/A'}</td>
                     <td>${complaint.bullyingType || 'N/A'}</td>
                     <td>${complaint.status || 'N/A'}</td>
+                    <td>${complaint.knowPerson ? 'Yes' : 'No'}</td>
                     <td>${complaint.privacy || 'N/A'}</td>
                     <td>${complaint.message || 'N/A'}</td>
                     <td>${complaint.accusedName || 'N/A'}</td>

@@ -1,15 +1,16 @@
-const MONGO_URI = "mongodb+srv://hvckari:Harsha@2005@cluster0.nlxaxvf.mongodb.net/antiragging?retryWrites=true&w=majority";
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+
+const MONGO_URI = "mongodb://localhost:27017/antiragging";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// This is the line to serve static files from the 'uploads' directory
+// This line makes the 'uploads' directory accessible for viewing files
 app.use('/uploads', express.static('uploads'));
 
 const startServer = async () => {
