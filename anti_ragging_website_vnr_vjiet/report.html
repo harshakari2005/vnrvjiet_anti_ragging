@@ -72,11 +72,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address*</label>
-                    <input type="email" class="form-control" name="email" id="email" required>
+                    <input type="email" class="form-control" name="email" id="email" required pattern="[^@]+@(gmail\.com|vnrvjiet\.in)$">
                 </div>
                 <div class="mb-3">
                     <label for="mobile" class="form-label">Mobile Number*</label>
-                    <input type="tel" class="form-control" name="mobile" id="mobile" required>
+                    <input type="tel" class="form-control" name="mobile" id="mobile" required pattern="^[6-9]\d{9}$">
                 </div>
                 <div class="mb-3">
                     <label for="issue" class="form-label">What was your issue?*</label>
@@ -87,10 +87,41 @@
                     <input type="file" class="form-control" name="image" id="image" accept="image/*,video/*">
                 </div>
                 <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="knowPerson">
+                    <input type="checkbox" class="form-check-input" name="knowPerson" id="knowPerson">
                     <label class="form-check-label" for="knowPerson">Do you know the person who ragged you?</label>
                 </div>
-                <div id="privacy-section-step3">
+                
+                <!-- New section for accused person details, hidden by default -->
+                <div id="accused-details" style="display:none;">
+                    <h4>Accused Person's Details</h4>
+                    <div class="mb-3">
+                        <label for="accusedName" class="form-label">Name of Accused</label>
+                        <input type="text" class="form-control" name="accusedName" id="accusedName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="accusedRollNumber" class="form-label">Roll Number of Accused</label>
+                        <input type="text" class="form-control" name="accusedRollNumber" id="accusedRollNumber">
+                    </div>
+                    <div class="mb-3">
+                        <label for="accusedYear" class="form-label">Year of Accused</label>
+                        <input type="number" class="form-control" name="accusedYear" id="accusedYear" min="1" max="4">
+                    </div>
+                    <div class="mb-3">
+                        <label for="accusedDepartment" class="form-label">Department of Accused</label>
+                        <input type="text" class="form-control" name="accusedDepartment" id="accusedDepartment">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="status" class="form-label">Are you?</label>
+                    <select class="form-select" name="status" id="status" required>
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="Victim">Victim</option>
+                        <option value="Witness">Witness</option>
+                    </select>
+                </div>
+
+                <div id="privacy-section">
                     <div class="mb-3">
                         <label for="privacy" class="form-label">How should your details be handled?*</label>
                         <select class="form-select" name="privacy" id="privacy" required>
@@ -100,40 +131,7 @@
                     </div>
                 </div>
                 <button type="button" id="back-to-step-2" class="btn btn-secondary mt-3">Go Back</button>
-                <button type="button" id="next-to-step-4" class="btn btn-warning mt-3" style="display:none;">Next</button>
-                <button type="submit" id="submit-btn-step3" class="btn btn-warning mt-3">Submit Report</button>
-            </div>
-
-            <!-- Step 4: Accused Person's Details -->
-            <div id="step-4" style="display: none;">
-                <h4>Step 4: Please enter the details of the person who ragged you.</h4>
-                <div class="mb-3">
-                    <label for="accusedName" class="form-label">Name of Accused</label>
-                    <input type="text" class="form-control" name="accusedName" id="accusedName">
-                </div>
-                <div class="mb-3">
-                    <label for="accusedRollNumber" class="form-label">Roll Number of Accused</label>
-                    <input type="text" class="form-control" name="accusedRollNumber" id="accusedRollNumber">
-                </div>
-                <div class="mb-3">
-                    <label for="accusedYear" class="form-label">Year of Accused</label>
-                    <input type="text" class="form-control" name="accusedYear" id="accusedYear">
-                </div>
-                <div class="mb-3">
-                    <label for="accusedDepartment" class="form-label">Department of Accused</label>
-                    <input type="text" class="form-control" name="accusedDepartment" id="accusedDepartment">
-                </div>
-                <div id="privacy-section-step4">
-                    <div class="mb-3">
-                        <label for="privacy-step4" class="form-label">How should your details be handled?*</label>
-                        <select class="form-select" name="privacy-step4" id="privacy-step4" required>
-                            <option value="private">Private (Only committee members can view)</option>
-                            <option value="anonymous">Anonymous (Details are kept confidential and not shared with the committee)</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="button" id="back-to-step-3-from-4" class="btn btn-secondary mt-3">Go Back</button>
-                <button type="submit" id="submit-btn-step4" class="btn btn-warning mt-3">Submit Report</button>
+                <button type="submit" id="submit-btn" class="btn btn-warning mt-3">Submit Report</button>
             </div>
         </form>
     </main>
@@ -145,19 +143,15 @@
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
         const step3 = document.getElementById('step-3');
-        const step4 = document.getElementById('step-4');
 
         const backToStep1Btn = document.getElementById('back-to-step-1');
         const backToStep2Btn = document.getElementById('back-to-step-2');
-        const backToStep3From4Btn = document.getElementById('back-to-step-3-from-4');
+        const submitBtn = document.getElementById('submit-btn');
 
-        const knowPersonCheckbox = document.getElementById('knowPerson');
-        const nextToStep4Btn = document.getElementById('next-to-step-4');
-        const submitBtnStep3 = document.getElementById('submit-btn-step3');
-        const submitBtnStep4 = document.getElementById('submit-btn-step4');
-        
         const locationInput = document.getElementById('location');
         const bullyingTypeInput = document.getElementById('bullyingType');
+        const knowPersonCheckbox = document.getElementById('knowPerson');
+        const accusedDetails = document.getElementById('accused-details');
 
         function handleNavigation(fromStep, toStep) {
             fromStep.style.display = 'none';
@@ -184,18 +178,19 @@
             handleNavigation(step3, step2);
         });
 
+        // Toggle visibility of accused person details based on checkbox state
         knowPersonCheckbox.addEventListener('change', (event) => {
             if (event.target.checked) {
-                nextToStep4Btn.style.display = 'block';
-                submitBtnStep3.style.display = 'none';
+                accusedDetails.style.display = 'block';
             } else {
-                nextToStep4Btn.style.display = 'none';
-                submitBtnStep3.style.display = 'block';
+                accusedDetails.style.display = 'none';
             }
         });
-
-        nextToStep4Btn.addEventListener('click', () => {
-             // Check if all required fields in step 3 are valid before navigating
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validate all required fields in Step 3
             const formInputs = step3.querySelectorAll('[required]');
             let formIsValid = true;
             formInputs.forEach(input => {
@@ -204,34 +199,28 @@
                     formIsValid = false;
                 }
             });
-            if(formIsValid){
-                handleNavigation(step3, step4);
+
+            if (!formIsValid) {
+                return; // Stop the submission if validation fails
             }
-        });
 
-        backToStep3From4Btn.addEventListener('click', () => {
-            handleNavigation(step4, step3);
-            knowPersonCheckbox.checked = false; // Uncheck when going back
-            nextToStep4Btn.style.display = 'none';
-            submitBtnStep3.style.display = 'block';
-        });
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Use FormData to automatically collect all form data by input names
             const formData = new FormData(form);
             
-            // Fix privacy field name for step 4
-            if (knowPersonCheckbox.checked) {
-                formData.set('privacy', formData.get('privacy-step4') || '');
-                formData.delete('privacy-step4');
-            } else {
-                // Ensure accused details are not sent if not known
+            // Explicitly set the knowPerson value to a boolean
+            formData.set('knowPerson', knowPersonCheckbox.checked);
+
+            if (!knowPersonCheckbox.checked) {
+                // Remove accused details from form data if checkbox is not checked
                 formData.delete('accusedName');
                 formData.delete('accusedRollNumber');
                 formData.delete('accusedYear');
                 formData.delete('accusedDepartment');
+            }
+
+            // Log for debugging
+            console.log('Sending FormData to server:');
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
             }
 
             try {
@@ -243,10 +232,7 @@
                 if (response.ok) {
                     alert('Complaint submitted successfully!');
                     form.reset();
-                    handleNavigation(step4.style.display === 'block' ? step4 : step3, step1); // Go back to step 1
-                    knowPersonCheckbox.checked = false;
-                    nextToStep4Btn.style.display = 'none';
-                    submitBtnStep3.style.display = 'block';
+                    handleNavigation(step3, step1);
                 } else {
                     const errorData = await response.json();
                     console.error('Error from server:', errorData);

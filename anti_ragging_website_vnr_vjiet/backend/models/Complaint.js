@@ -8,12 +8,14 @@ const ComplaintSchema = new mongoose.Schema({
   message: String,
   location: String,
   bullyingType: String,
+  status: String, // New field for Victim or Witness
   knowPerson: Boolean,
   privacy: String,
   accusedName: String,
   accusedRollNumber: String,
   accusedYear: String,
   accusedDepartment: String,
+  image: String,
   date: {
     type: Date,
     default: Date.now

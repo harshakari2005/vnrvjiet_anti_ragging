@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// This is the new line to serve static files from the 'uploads' directory
+// This is the line to serve static files from the 'uploads' directory
 app.use('/uploads', express.static('uploads'));
 
 const startServer = async () => {
