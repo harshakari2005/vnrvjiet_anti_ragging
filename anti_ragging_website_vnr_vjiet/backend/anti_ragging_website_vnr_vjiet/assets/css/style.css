@@ -23,7 +23,7 @@ h1, h2 {
     color: #00ffcc !important;
 }
 footer {
-    position: fixed;
+    position: sticky;
     bottom: 0;
     left: 0;
     width: 100%;
